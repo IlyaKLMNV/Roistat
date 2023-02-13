@@ -1,32 +1,47 @@
 <template>
-	<Table row-key="id" :columns="columns" :data="users" border></Table>
-	<!-- <button @click="buildTree()"></button> -->
+  <Table row-key="id" :columns="columns" :data="users" border></Table>
 </template>
+
 <script>
-	import { useTableStore } from '../store/TableStore.js'	
-	
-	export default {
-		data () {
-			return {
-					columns: [
-						{
-								title: 'Name',
-								key: 'name'
-						},
-						{
-								title: 'phoneNumber',
-								key: 'phoneNumber'
-						}
-					],
-					
-				}
-		},
-		computed: {
-			users (){
-				console.log(useTableStore().data);
-				return useTableStore().data
-				// return this.transform(useTableStore().data)
-			}
-		}
-	}
+import { computed } from 'vue'
+import { useTableStore } from '../store/TableStore'
+
+export default {
+  setup() {
+    const tableStore = useTableStore()
+
+    const columns = [
+      {
+        title: 'Name',
+        key: 'name',
+      },
+      {
+        title: 'Phone Number',
+        key: 'phoneNumber',
+      },
+    ]
+
+    const users = computed(() => {
+      const transform = (elements, parentId = null) => {
+        const tree = []
+        elements
+          .filter((element) => element.parentId === parentId)
+          .forEach((element) => {
+            const node = {
+              ...element,
+              children: transform(elements, element.id),
+            }
+            tree.push(node)
+          })
+        return tree
+      }
+      return transform(tableStore.data)
+    })
+
+    return {
+      columns,
+      users,
+    }
+  },
+}
 </script>
