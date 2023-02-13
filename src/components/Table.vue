@@ -14,30 +14,23 @@ export default {
       {
         title: 'Name',
         key: 'name',
+				tree: true
       },
       {
         title: 'Phone Number',
         key: 'phoneNumber',
       },
     ]
-
+		const transform = (elements, parentId = null) =>  {
+			const children = elements.filter(element => element.parentId === parentId);
+			return children.map(child => ({
+				...child,
+				children: transform(elements, child.id)
+			}));
+		}
     const users = computed(() => {
-      const transform = (elements, parentId = null) => {
-        const tree = []
-        elements
-          .filter((element) => element.parentId === parentId)
-          .forEach((element) => {
-            const node = {
-              ...element,
-              children: transform(elements, element.id),
-            }
-            tree.push(node)
-          })
-        return tree
-      }
-      return transform(tableStore.data)
+      return transform(tableStore.data, null)
     })
-
     return {
       columns,
       users,

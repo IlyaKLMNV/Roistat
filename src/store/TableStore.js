@@ -36,15 +36,5 @@ export const useTableStore = defineStore({
       },
     ]
   }),
-  getters: {
-    getTreeData: (state) => {
-      const getChildren = (parentId) =>
-        state.data.filter((item) => item.parentId === parentId).map((item) => ({
-          ...item,
-          children: getChildren(item.id),
-        }));
-
-      return getChildren(null);
-    },
-  },
+  
 });
