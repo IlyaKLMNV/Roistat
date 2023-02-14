@@ -1,12 +1,23 @@
 <template>
   <Space direction="vertical">
-    <Input v-model="name" placeholder="Имя" />
-    <Input v-model="phone" placeholder="Телефон" />
-    <Select v-model="selectedUser.id" placeholder="Выберите пользователя">
-      <Option v-for="(user, index) in users" :key="index" :value="user.id">{{ user.name }}</Option>
-    </Select>
+    <Space>
+      Имя
+      <Input v-model="name"/>
+    </Space>
+    <Space>
+      Телефон
+      <Input v-model="phone" placeholder="Телефон" />
+    </Space>
+    <Space>
+      Начальник
+      <Select v-model="selectedUser.id" placeholder="Выберите пользователя">
+        <Option v-for="(user, index) in users" :key="index" :value="user.id">{{ user.name }}</Option>
+      </Select>
+    </Space>
     <Button @click="handleRender">Добавить</Button>
+    <Button @click="clearStorage">Очистить хранилище</Button>
   </Space>
+  
 </template>
 
 <script>
@@ -23,7 +34,7 @@ export default {
     return {
       name: '',
       phone: '',
-      selectedUser: { id: null }
+      selectedUser: { id: 1 }
     }
   },
   computed: {
@@ -36,9 +47,18 @@ export default {
   },
   methods: {
     handleRender() {
-      this.tableStore.addUser({ name: this.name, phoneNumber: this.phone, parentId: this.selectedUser.id });
-      this.$Modal.remove();
+      if (!this.name || !this.phone) {
+        alert('Заполните все поля');
+        return;
+      }
+      this.tableStore.addUser({ name: this.name, phoneNumber: this.phone, id: this.tableStore.users.length + 1, parentId: this.selectedUser.id });
+      this.name = "";
+      this.phone = "";
+    },
+    clearStorage() {
+      localStorage.clear();
+      location.reload()
     }
-  },
+  }
 }
 </script>

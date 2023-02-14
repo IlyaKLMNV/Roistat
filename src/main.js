@@ -5,7 +5,9 @@ import 'view-ui-plus/dist/styles/viewuiplus.css'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 
-//Internationalization
+import { useTableStore } from './store/TableStore'
+
+//localization
 import en from 'view-ui-plus/dist/locale/en-US';
 
 
@@ -20,6 +22,9 @@ const i18n = createI18n({
 });
 
 const pinia = createPinia()
+useTableStore(pinia)
+useTableStore(pinia).loadFromLocalStorage()
+
 const app = createApp(App)
 
 app.use(pinia)

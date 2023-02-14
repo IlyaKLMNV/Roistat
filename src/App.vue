@@ -1,7 +1,16 @@
 <template>
 
-  <Table />
-  <Modal />
+  <div class="flex">
+
+    <div class="table">
+      <Table />
+    </div>
+
+    <div class="modal">
+      <Modal />
+    </div>
+
+  </div>
 
 </template>
 
@@ -20,4 +29,13 @@ export default {
 </script>
 
 <style>
+  .flex {
+    display: flex;
+  }
+  .table {
+    width: 100%;
+  }
+  .modal {
+    width: 100%;
+  }
 </style>

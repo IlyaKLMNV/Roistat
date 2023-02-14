@@ -6,13 +6,13 @@ export const useTableStore = defineStore({
     users: [
       {
         name: 'Марина',
-        phoneNumber: '+79411232142',
+        phoneNumber: '+77411232142',
         id: 1,
         parentId: null
       },
       {
         name: 'Петр',
-        phoneNumber: '+79411232142',
+        phoneNumber: '+78411232142',
         id: 2,
         parentId: null
       },
@@ -39,59 +39,16 @@ export const useTableStore = defineStore({
   actions: {
     addUser(user) {
       this.users.push(user)
+      this.saveToLocalStorage()
+    },
+    loadFromLocalStorage() {
+      const data = localStorage.getItem('tableData')
+      if (data) {
+        this.users = JSON.parse(data)
+      }
+    },
+    saveToLocalStorage() {
+      localStorage.setItem('tableData', JSON.stringify(this.users))
     }
-  }
+  },
 })
-
-
-
-// import { defineStore } from 'pinia'
-
-// export const useTableStore = defineStore({
-//   id: 'table',
-//   state: () => ({
-//     users: [
-//       {
-//         name: 'Марина',
-//         phoneNumber: '+79411232142',
-//         id: 1,
-//         parentId: null
-//       },
-//       {
-//         name: 'Петр',
-//         phoneNumber: '+79411232142',
-//         id: 2,
-//         parentId: null
-//       },
-//       {
-//         name: 'Иван',
-//         phoneNumber: '+79411232142',
-//         id: 3,
-//         parentId: null
-//       },
-//       {
-//         name: 'Алексей',
-//         phoneNumber: '+79411232142',
-//         id: 4,
-//         parentId: 3
-//       },
-//       {
-//         name: 'Борис',
-//         phoneNumber: '+79411232142',
-//         id: 5,
-//         parentId: null
-//       }
-//     ],
-//   }),
-//   actions: {
-//     fetchUsers() {
-//       // Получаем сохраненных пользователей из локального хранилища
-//       const savedUsers = JSON.parse(localStorage.getItem('users')) || []
-
-//       // Сохраняем пользователей в состоянии хранилища
-//       this.users = savedUsers
-//     },
-//   },
-// })
-
-

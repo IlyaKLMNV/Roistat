@@ -1,3 +1,8 @@
+<template>
+  <Table row-key="id" :columns="columns" :data="users" border></Table>
+</template>
+
+
 <script>
 import { computed } from 'vue'
 import { useTableStore } from '../store/TableStore'
@@ -7,13 +12,15 @@ export default {
     const tableStore = useTableStore()
     const columns = [
       {
-        title: 'Name',
+        title: 'Имя',
         key: 'name',
-        tree: true
+        tree: true,
+        sortable: true
       },
       {
-        title: 'Phone Number',
-        key: 'phoneNumber'
+        title: 'Телефон',
+        key: 'phoneNumber',
+        sortable: true
       }
     ]
     const transform = (elements, parentId = null) => {
@@ -36,6 +43,3 @@ export default {
 }
 </script>
 
-<template>
-  <Table row-key="id" :columns="columns" :data="users" border></Table>
-</template>
