@@ -1,12 +1,12 @@
 <template>
-  <Space direction="vertical">
+  <Space class="form" direction="vertical">
     <Space>
       Имя
-      <Input v-model="name"/>
+      <Input v-model="name" />
     </Space>
     <Space>
       Телефон
-      <Input v-model="phone" placeholder="Телефон" />
+      <Input v-model="phone" />
     </Space>
     <Space>
       Начальник
@@ -14,10 +14,11 @@
         <Option v-for="(user, index) in users" :key="index" :value="user.id">{{ user.name }}</Option>
       </Select>
     </Space>
-    <Button @click="handleRender">Добавить</Button>
-    <Button @click="clearStorage">Очистить хранилище</Button>
+    <div class="buttons">
+      <Button @click="handleRender" style="width:48%">Сохранить</Button>
+      <Button @click="clearStorage" style="width:48%">Очистить хранилище</Button>
+    </div>
   </Space>
-  
 </template>
 
 <script>
@@ -62,3 +63,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .form {
+    width: 100%;
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
