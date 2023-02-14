@@ -6,7 +6,6 @@
       <Option v-for="(user, index) in users" :key="index" :value="user.id">{{ user.name }}</Option>
     </Select>
     <Button @click="handleRender">Добавить</Button>
-    {{ name }}
   </Space>
 </template>
 
@@ -27,21 +26,19 @@ export default {
       selectedUser: { id: null }
     }
   },
-  setup() {
-    const tableStore = useTableStore()
-
-    const users = tableStore.users
-
-    const handleRender = () => {
-      tableStore.addUser({ name: this.name, phoneNumber: this.phone, parentId: selectedUser.id })
-      this.$Modal.remove()
+  computed: {
+    tableStore() {
+      return useTableStore();
+    },
+    users() {
+      return this.tableStore.users;
     }
-
-    return {
-      handleRender,
-      users,
-      selectedUser: { id: null }
+  },
+  methods: {
+    handleRender() {
+      this.tableStore.addUser({ name: this.name, phoneNumber: this.phone, parentId: this.selectedUser.id });
+      this.$Modal.remove();
     }
-  }
+  },
 }
 </script>

@@ -38,7 +38,7 @@ export const useTableStore = defineStore({
   }),
   actions: {
     addUser(user) {
-      this.data.push(user)
+      this.users.push(user)
     }
   }
 })

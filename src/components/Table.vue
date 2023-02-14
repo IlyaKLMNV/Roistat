@@ -23,9 +23,11 @@ export default {
         children: transform(elements, child.id)
       }))
     }
+
     const users = computed(() => {
       return transform(tableStore.users, null)
     })
+
     return {
       columns,
       users
